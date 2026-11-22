@@ -57,12 +57,18 @@ foreach ($p in $paths) {
     $env:PATH += (';' + $p)
   }
 }
-$required = @('git.exe','rustc.exe','cargo.exe','cmake.exe','node.exe','python.exe')
+$required = @('git.exe','rustc.exe','cargo.exe','node.exe')
+$recommended = @('cmake.exe','python.exe')
 $missing = @()
 foreach ($tool in $required) {
   $cmd = Get-Command $tool -ErrorAction SilentlyContinue
   if ($cmd) { Write-Output ('PASS ' + $tool + ': ' + $cmd.Source) }
   else { $missing += $tool; Write-Output ('MISSING ' + $tool) }
+}
+foreach ($tool in $recommended) {
+  $cmd = Get-Command $tool -ErrorAction SilentlyContinue
+  if ($cmd) { Write-Output ('OPTIONAL_PASS ' + $tool + ': ' + $cmd.Source) }
+  else { Write-Warning ('OPTIONAL_MISSING ' + $tool + ' (needed for additional research/bootstrapping, not Rust core tests)') }
 }
 $clang = Get-Command clang.exe -ErrorAction SilentlyContinue
 if ($clang) { Write-Output ('PASS clang.exe: ' + $clang.Source) }
