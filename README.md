@@ -4,6 +4,14 @@
 
 A native **Rust** firmware builder/verifier and local browser-based GUI for Windows x64 and Linux/Ubuntu WSL, derived from the workflow in [XinmiaoZhao/NikonFirmwarePatch](https://github.com/XinmiaoZhao/NikonFirmwarePatch) v0.5.1 (upstream commit 25fefa1e17f321ee285bea77b3c54427f9912e4b). Licensed GPL-3.0-only; the original author is credited.
 
+## Installation, compilers and firmware downloads
+
+- [Windows PowerShell / WSL2 Ubuntu 26.04 / Ubuntu automatic installation and verification](SETUP_WINDOWS_WSL_UBUNTU.md)
+- [Windows installer: install-windows.ps1](install-windows.ps1) (check-only by default)
+- [Ubuntu 26.04 installer: install-ubuntu.sh](install-ubuntu.sh) (check-only by default)
+- [Firmware source links including the owner's Softpedia Nikon Z8 search](FIRMWARE_SOURCES.md)
+- [Locally preparing original firmware and upstream v0.5.1 resources](LOCAL_SETUP.md)
+
 ## Applications (source + downloadable binaries)
 
 See the [Releases](../../releases) page for the Windows x64 executable and Linux x86-64 executable. The program itself is written in Rust and **does not use Python at runtime**. The GUI is served by a native Rust process on localhost (127.0.0.1), displayed in your existing web browser, **not** a native windowing toolkit.
