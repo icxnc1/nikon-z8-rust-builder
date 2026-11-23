@@ -1,0 +1,17 @@
+{
+  "label": "LOCAL_CONTAINER_SYNTHETIC",
+  "files": {
+    "README.md": "2dec24fe3cf8df7166792ef63eed8ddda6a1a9da93ae67bc70e83843eeb23ee2",
+    "night_dng_v2.c": "30f241d913a62d66af85277d8749ad116486a581fdc9eb835a963ec8b8f1b00b",
+    "night_dng_v2.h": "7cd94db8412656663d15e63561fb93b8b531a4dd49c4c37121e378cd83b319c1",
+    "hdr_float_reference.py": "1c2d8044d9ca492d5c0292cf802a332f761268cdc897e3485335e25a2c7e810f",
+    "metadata_gate.py": "00b13c66e6a1f4155ecf5e4f88370d68e5853faebd5bf5d84154c1875de9c70e",
+    "run_tests.sh": "55deb39c468d923eff6de30983af0364a11fee1d0aa18271f454d76b95308746",
+    "tests/test_v2.c": "627691311221996c932a7042f186294788780573e92d6357a6ed763fe320eb6b",
+    "tests/check_v2.py": "d61bbbefc2ae4fcbfcac44d753275efcf8e537e7251e5c8f942291cc4cbc11fd",
+    "tests/diff_fuzz.py": "cef5759b53479a644a40d94ed3eed75ea09ce960769801a5066b6d19254296a0",
+    "tests/check_hdr.py": "133ae0f7aad052875ac9727f018ac40e18501d02ffb801cda143d21a67f8b7a3"
+  },
+  "reproduction": "./run_tests.sh",
+  "flash_approved": false
+}
