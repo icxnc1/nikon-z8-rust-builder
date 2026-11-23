@@ -25,7 +25,8 @@ ARM firmware pipeline.
 - **HDR:** float32 CFA DNG is supported by DNG 1.4 at the format level;
   `hdr_float_reference.py` demonstrates per-exposure black subtraction,
   shutter-ratio normalization, clipping mask, signed residuals, values >1.0,
-  and atomic output only after a TIFF readback. No deghost, star alignment,
+  and an explicit HDR WhiteLevel derived from the short-exposure clipping
+  ceiling (4.0 in the 0.25× synthetic test), plus atomic output only after a TIFF readback. No deghost, star alignment,
   bad-pixel correction, highlight reconstruction or Adobe/NX Studio compatibility
   is claimed. All-saturated pixels carry lower bounds and a mask, not invented
   highlight detail. Integer DNG16 output is not used as the HDR container.
