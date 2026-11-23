@@ -3,7 +3,7 @@
 > **⚠️ EXPERIMENTAL — WORK IN PROGRESS — EXPERTS ONLY. NOT APPROVED FOR FLASHING.**
 > Modified firmware may **permanently disable a camera**. No beginner tutorials or individual troubleshooting are provided. Bug reports and proposals require reproducible, well-documented evidence. **Read [the mandatory bilingual warning and contribution policy](WARNING.md) before using this project.**
 
-**Community research project — NOT official Nikon software.**
+**Community research project — NOT official Nikon software.** This independent Rust application is **not reviewed, maintained or supported by XinmiaoZhao/NikonFirmwarePatch**. Report issues about builds made with this tool **[here](../../issues)**, not upstream; a claim of upstream-equivalent output requires the same version, feature groups and SHA-256. See the [version-specific SHA / Apple Clang / adversarial cross-check report](docs/UPSTREAM_SHA256_APPLECLANG_NIGHT_DNG16_20261123.md).
 
 A native **Rust** firmware builder/verifier and local browser-based GUI for Windows x64 and Linux/Ubuntu WSL, derived from the workflow in [XinmiaoZhao/NikonFirmwarePatch](https://github.com/XinmiaoZhao/NikonFirmwarePatch) v0.5.1 (upstream commit 25fefa1e17f321ee285bea77b3c54427f9912e4b). Licensed GPL-3.0-only; the original author is credited.
 
