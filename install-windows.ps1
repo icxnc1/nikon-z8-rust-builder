@@ -67,7 +67,10 @@ foreach ($tool in $required) {
 }
 foreach ($tool in $recommended) {
   $cmd = Get-Command $tool -ErrorAction SilentlyContinue
-  if ($cmd) { Write-Output ('OPTIONAL_PASS ' + $tool + ': ' + $cmd.Source) }
+  if ($tool -eq 'python.exe' -and $cmd -and $cmd.Source -match '[\\/]WindowsApps[\\/]python') {
+    Write-Warning ('OPTIONAL_UNVERIFIED python.exe is a WindowsApps execution alias, not proof of a working Python interpreter. Install Python.Python.3.13 to generate local patch recipes.')
+  }
+  elseif ($cmd) { Write-Output ('OPTIONAL_PASS ' + $tool + ': ' + $cmd.Source) }
   else { Write-Warning ('OPTIONAL_MISSING ' + $tool + ' (needed for additional research/bootstrapping, not Rust core tests)') }
 }
 $clang = Get-Command clang.exe -ErrorAction SilentlyContinue

@@ -2,10 +2,14 @@
 
 The public repository provides Rust source, Windows/Linux executable releases, and two opt-in environment installers. Neither script downloads Nikon firmware or automatically flashes a camera. Running a prebuilt application requires no compiler, Python, QEMU or WSL; firmware builds additionally need *local upstream resources* (LOCAL_SETUP.md).
 
+**Measured environment status (2026-11-23):** Windows Rust unit tests 4/4 and Node localization 15/23 PASS; Ubuntu 26.04 WSL2 Rust tests 4/4 and offline release build PASS. Both prebuilt executables were retrieved from the public release and SHA256 verified. **Ubuntu installer --check reports missing AArch64 QEMU/cross tools and default-PATH Node.js; Windows reports no Clang/CMake in PATH and only Python WindowsApps aliases. Actual fresh --Install runs were NOT performed.** See [toolchain verification and missing dependencies](docs/TOOLCHAIN_VERIFICATION_20261123.md); do not mistake a compiled Rust builder for a complete tested Nikon hardware emulator.
+
 ## Windows PowerShell
 
-Inspect the installer before executing. Its default is a READ-ONLY check:
+Clone the source repository and inspect its installer before executing. The default is a READ-ONLY check:
 
+    git clone https://github.com/icxnc1/nikon-z8-rust-builder.git
+    cd nikon-z8-rust-builder
     powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install-windows.ps1
 
 Install development tools from the Microsoft winget sources:
@@ -18,8 +22,9 @@ To also install Visual Studio C++ MSVC Build Tools with Windows SDK (large downl
 
 It handles these winget package IDs: Git.Git, Rustlang.Rustup, LLVM.LLVM, Kitware.CMake, Ninja-build.Ninja, Python.Python.3.13 and OpenJS.NodeJS.LTS. Native Rust MSVC builds need the C++ linker and Windows SDK; use -InstallMSVC if missing. Run the installer once more after a terminal restart to re-check the toolchain.
 
-Verify and compile:
+Verify compiler, unit tests, and UI after tools are available:
 
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install-windows.ps1 -RunTests
     cargo test --locked
     node .\test_i18n.cjs
     cargo build --release --locked
@@ -40,15 +45,16 @@ Alternatively, explicitly request WSL setup within the installer:
 
 The script avoids reinstalling an already existing Ubuntu-26.04 distribution. WSL feature activation may need Windows restart; create the Ubuntu Linux user on first launch. Confirm Ubuntu-26.04 shows VERSION 2.
 
-In the Linux shell, as your normal user (not root):
+In the Linux shell, as your normal user (not root), clone the public sources:
 
+    git clone https://github.com/icxnc1/nikon-z8-rust-builder.git
     cd ~/nikon-z8-rust-builder
     bash install-ubuntu.sh --check
     bash install-ubuntu.sh --install
     bash install-ubuntu.sh --test
     cargo build --release --locked
 
-The default --check does not install anything. --install runs apt-get update and installs native Ubuntu packages from configured apt repositories.
+The default --check does not install anything. --install runs apt-get update and installs native Ubuntu packages from configured apt repositories; it requires sudo/apt permissions and is **not** verified by a fresh-machine installation in this project. A default check returning INCOMPLETE does **not** mean the core Rust application cannot compile: the check also expects optional QEMU/AArch64 research tools. See the exact [audit status](docs/TOOLCHAIN_VERIFICATION_20261123.md).
 
 Packages: rustc cargo build-essential gcc g++ make clang lld llvm libclang-dev cmake ninja-build pkg-config libssl-dev; python3 python3-venv python3-pip nodejs npm git git-lfs gh jq openssl; QEMU AArch64 emulator via qemu-system-arm, qemu-user and qemu-utils; ARM64 cross compiler gcc-aarch64-linux-gnu and binutils-aarch64-linux-gnu; gdb-multiarch, file, xxd, zip, unzip, tar, curl, ca-certificates. Optional formal verification tools: z3 and cvc5 via bash install-ubuntu.sh --install --formal.
 

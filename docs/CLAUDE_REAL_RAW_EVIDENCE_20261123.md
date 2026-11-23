@@ -17,14 +17,14 @@ Private ANALYSIS_12026NIK.json and HOT_DETAIL_12026NIK.json report:
 - Single-frame spatial sigma: **21.1415 DN**.
 - Sixteen-frame average spatial sigma: **5.8516 DN** versus theoretical independent-noise prediction **5.2854 DN**.
 - Ratio: **3.61×**, approximately **1.85 stops of noise-standard-deviation reduction** in dark frames; this is **not** proven scene dynamic-range gain.
-- Median temporal noise sigma: **20.35 DN**; spatial pixel FPN sigma: **3.58 DN**; stable hot pixels above 50 DN: **6,018**.
+- Median temporal noise sigma: **20.35 DN**; spatial pixel FPN sigma: **3.58 DN**. The file calls **6,018** pixels a stable-hot aggregate (`stable_hot_gt50dn`), but just **115** exceed 50 DN in the **minimum of all 16 frames** (`hot_gt50_in_min_of_16`). The A/B overlap is ~**25%**. These are different persistence definitions; no 6,018-pixel always-hot defect map is justified.
 - A separate 8 + 8-frame experiment found noise sigma **8.12 → 10.79 DN** after subtracting another 8-frame master dark. This again warns against unconditional master subtraction.
 
 ## Real 16-frame signed RAW arithmetic verification
 
 Private source: development/Z8_0408_WORK/evidence/NIGHT16_REAL_VERIFY.json; independent verification implementation: development/Z8_0408_WORK/tools/verify_night16_real.py.
 
-The local offline calculation took **16 distinct real Nikon Z8 NEFs**, ISO3200 at 4s. An independent rawpy oracle checked the signed-Q8 Bayer accumulation in one **1024×1024 ROI**: **1,048,576 pixels compared, zero mismatches**. Within that ROI, robust green noise sigma was **19.5518 → 5.2818 DN** (ratio 3.70×, about 1.89 stops on that noise statistic).
+The local offline calculation took **16 distinct real Nikon Z8 NEFs**, ISO3200 at 4s. An independent rawpy oracle checked the signed-Q8 Bayer accumulation in one **1024×1024 ROI** (~**2.3%** of the 8,280×5,520 raw array): **1,048,576 pixels compared, zero mismatches**. The standalone summary JSON does **not** list every source filename/hash, so its claimed relationship to the `12026NIK` inventory must be checked against the private generator report, not merely inferred from matching ISO and exposure. Within that ROI, robust green noise sigma was **19.5518 → 5.2818 DN** (ratio 3.70×, about 1.89 stops on that noise statistic).
 
 Crucial boundaries: the generated output is a **TIFF/int32 mosaic, not a Nikon NEF**; no actual motion alignment was proven; **no master dark was used**; no in-camera Night RAW functionality exists in this evidence. A 16-frame offline arithmetic cross-check is not proof of firmware integration or camera safety.
 
@@ -32,7 +32,7 @@ Crucial boundaries: the generated output is a **TIFF/int32 mosaic, not a Nikon N
 
 Private project development/z8_deep_raw contains separate Rust modules for NEF decode, per-CFA black correction, wavelet denoising before demosaic, RCD demosaic, float32 DNG, hot-pixel/master-dark processing and Bayer-domain HDR. This **is not the same application as the public Nikon firmware patch builder**.
 
-Its documentation records an older local **45,705,600-sample NEF decode comparison** with patched rawler 0.8.0 versus LibRaw/rawpy and a local rawler identity-curve correction avoiding an approximately **−0.75 DN** negative bias in the affected code path (private vendor/PATCHES.md and tests/evidence/XCHECK_DECODE.json).
+Its documentation records a local **45,705,600-sample NEF decode comparison** on a **separate public Nikon Z8 lossless 14-bit sample**, patched rawler 0.8.0 versus LibRaw/rawpy, and a local rawler identity-curve correction avoiding an approximately **−0.75 DN** negative bias in that decoder path (private `vendor/PATCHES.md`, referring to `tests/XCHECK_DECODE.json`; the README separately points to `tests/evidence/XCHECK_DECODE.json`). This historic test does **not** prove the compression mode or exact decoder path of the private `100TESTE`/`12026NIK` NEFs.
 
 Its HDR gains of **+1.62 EV** in deep shadows are from **synthetic scene/noise data**, not measured real-scene HDR. Full-resolution three-frame HDR smoke performance was reported at **4.7s merge / 12.9s total / 1.47 GB peak RSS**, on **2 PC x86 vCPUs**, not Nikon EXPEED7.
 

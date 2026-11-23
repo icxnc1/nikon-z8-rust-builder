@@ -4,8 +4,13 @@
 
 A native **Rust** firmware builder/verifier and local browser-based GUI for Windows x64 and Linux/Ubuntu WSL, derived from the workflow in [XinmiaoZhao/NikonFirmwarePatch](https://github.com/XinmiaoZhao/NikonFirmwarePatch) v0.5.1 (upstream commit 25fefa1e17f321ee285bea77b3c54427f9912e4b). Licensed GPL-3.0-only; the original author is credited.
 
+## Research in progress: Night RAW and Night HDR
+
+**Night RAW and Night HDR are NOT contained in the released builder or any proven installable firmware.** We are experimentally combining 4/8/16 Nikon Z8 RAW frames for lower nighttime shadow noise and testing −2/0/+2 EV Bayer-domain HDR. Actual **16-frame dark NEFs** measured 21.14 → 5.85 DN noise sigma; independently checked offline arithmetic matched on a **1024×1024 ROI**. This is **NOT a validated in-camera Night mode or a claim of greater sensor ADC bit depth**. Read [the full Night RAW/HDR research, evidence and capture protocol](RESEARCH.md) and the [Claude / real RAW adversarial audit](docs/CLAUDE_REAL_RAW_EVIDENCE_20261123.md).
+
 ## Installation, compilers and firmware downloads
 
+- [Verified vs missing tools and tests, Windows 11 + Ubuntu 26.04 WSL2](docs/TOOLCHAIN_VERIFICATION_20261123.md)
 - [Windows PowerShell / WSL2 Ubuntu 26.04 / Ubuntu automatic installation and verification](SETUP_WINDOWS_WSL_UBUNTU.md)
 - [Windows installer: install-windows.ps1](install-windows.ps1) (check-only by default)
 - [Ubuntu 26.04 installer: install-ubuntu.sh](install-ubuntu.sh) (check-only by default)

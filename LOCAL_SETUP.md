@@ -4,7 +4,15 @@ The Windows/Linux release contains a self-contained compiled **Rust application*
 
 1. Obtain your own legally acquired unmodified Nikon Z8 firmware **C3.11** update file.
 2. Obtain the official *upstream project* release toolkit for **NikonFirmwarePatch v0.5.1** from https://github.com/XinmiaoZhao/NikonFirmwarePatch/releases/tag/v0.5.1 . Extract the toolkit, preserving its "features.py", "z8prores" modules, "resources/compiled.json", "resources/combinations.json" and associated resource files. Do not put those binary files into this public GitHub repository.
-3. Install and configure the Python dependencies specified by the original upstream toolkit. Python is used **once, locally** to prepare recipes; the Rust application has **no Python runtime dependency**.
+3. Install and configure a **real Python interpreter**, not only the WindowsApps execution aliases. The upstream v0.5.1 release includes `requirements.txt` with **`capstone==5.0.7`**. For example, in Ubuntu/WSL, in a private local directory:
+
+    python3 -m venv .venv
+    source .venv/bin/activate
+    python -m pip install -r /absolute/path/to/NikonFirmwarePatch-v0.5.1/requirements.txt
+    python --version
+    python -c "import capstone; print(capstone.__version__)"
+
+   The optional local generator uses Python once, and the native Rust application has **no Python runtime dependency**. For Windows, use a genuine Python installation and an equivalent activated venv; the local WindowsApps `python.exe` alias does **not** demonstrate Python is installed.
 4. Run the optional bootstrap script, providing local absolute paths:
 
     python3 tools/generate_local_recipes.py --stock /path/to/Z_8_0311.bin --toolkit /path/to/upstream-v0.5.1 --output /private/generated-recipes
