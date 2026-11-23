@@ -52,13 +52,14 @@ for y in range(2):
         w=ratio**2;ss+=w*(raw-black)/(white-black)/ratio;ww+=w
     exp=ss/ww
     assert abs(float(out[y,x])-exp)<1e-6
-path=r/'hdr_float.dng';write_dng_float32(path,out,cal)
+path=r/'hdr_float.dng';write_dng_float32(path,out,cal,white_radiance=4.0)
 with tifffile.TiffFile(path) as tif:
     pg=tif.pages[0]
     assert pg.photometric==32803 and pg.dtype==np.dtype('float32')
     assert pg.tags[339].value==3
     assert tuple(pg.tags[50706].value)==(1,4,0,0)
     assert pg.tags[50778].value==21
+    assert pg.tags[50717].value==4.0 and float(out.max())<pg.tags[50717].value
     assert np.array_equal(pg.asarray(),out)
 print('HDR_SYNTHETIC PASS',{'max_radiance':float(out.max()),'negative_preserved':bool(out.min()<0),
     'float_tiff_roundtrip':True,'tag_count':len(pg.tags),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
