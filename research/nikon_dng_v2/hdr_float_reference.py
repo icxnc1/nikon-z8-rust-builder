@@ -47,12 +47,14 @@ def fuse(raws, exposures, black, white, reference_us, *, saturation_margin=2):
     return output.astype('<f4'), denom==0
 
 
-def write_dng_float32(path, array, cal, cfa=(0,1,1,2)):
+def write_dng_float32(path, array, cal, *, white_radiance, cfa=(0,1,1,2)):
     """Atomic on success; prototype metadata is explicitly declared external."""
     path=pathlib.Path(path)
     a=np.asarray(array)
     if a.ndim!=2 or a.dtype!=np.dtype('<f4') or not np.all(np.isfinite(a)):
         raise ValueError('need finite 2D float32 mosaic')
+    if not np.isfinite(white_radiance) or white_radiance < 1.0 or np.max(a) > white_radiance:
+        raise ValueError('HDR white_radiance must represent the measurable clipping ceiling')
     if path.exists():
         raise FileExistsError(path)
     if sorted(cfa)!=[0,1,1,2]:
@@ -74,7 +76,7 @@ def write_dng_float32(path, array, cal, cfa=(0,1,1,2)):
         (50708,'s',0,str(cal['model']),False),
         (50713,'H',2,(2,2),False),
         (50714,'f',1,0.0,False),
-        (50717,'f',1,1.0,False),
+        (50717,'f',1,float(white_radiance),False),
         (50721,'2i',9,tuple((int(x),10000) for x in cm),False),
         (50728,'2I',3,tuple((int(round(float(x)*1000000)),1000000) for x in neutral),False),
         (50778,'H',1,int(cal['illuminant1']),False),
