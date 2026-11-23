@@ -1,5 +1,8 @@
 # Nikon Z8 Rust Patch Builder — Windows / Linux / WSL
 
+> **⚠️ EXPERIMENTAL — WORK IN PROGRESS — EXPERTS ONLY. NOT APPROVED FOR FLASHING.**
+> Modified firmware may **permanently disable a camera**. No beginner tutorials or individual troubleshooting are provided. Bug reports and proposals require reproducible, well-documented evidence. **Read [the mandatory bilingual warning and contribution policy](WARNING.md) before using this project.**
+
 **Community research project — NOT official Nikon software.**
 
 A native **Rust** firmware builder/verifier and local browser-based GUI for Windows x64 and Linux/Ubuntu WSL, derived from the workflow in [XinmiaoZhao/NikonFirmwarePatch](https://github.com/XinmiaoZhao/NikonFirmwarePatch) v0.5.1 (upstream commit 25fefa1e17f321ee285bea77b3c54427f9912e4b). Licensed GPL-3.0-only; the original author is credited.
